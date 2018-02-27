@@ -1,0 +1,69 @@
+<!-- views/login.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Node Authentication</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UAZQUIZ APPLICATION</title>
+  <link rel="stylesheet" href="bootstrap.min.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+
+	<!-- Bootstrap core CSS -->
+
+	<link rel="icon" type="image/png" href="favicon.png" />
+
+	<link href="font-awesome.min.css" rel="stylesheet">
+	<link href="animate.min.css" rel="stylesheet">
+
+	<!-- Custom styling plus plugins -->
+	<link href="custom.css" rel="stylesheet">
+
+</head>
+<body style="background:#172D44; background-image: url('official.png'); background-repeat: no-repeat; background-attachment: fixed;
+    background-position: 50% 20%;; background-size: 500px 500px;">
+    <div class="container-fluid animate form" id="login">
+      <div class="cover-container d-flex h-100 p-3 mx-auto flex-column center" id="parent">
+        <main role="main" class="login-content">
+          <h1>Se connecter</h1>
+
+          <!-- show any messages that come back with authentication -->
+          <% if (message.length > 0) { %>
+              <div class="alert alert-danger"><%= message %></div>
+          <% } %>
+
+          <!-- LOGIN FORM -->
+          <form action="/login" method="post" id="form-login">
+              <div class="form-group">
+                  <label>Identification (Ex: 30012)</label>
+                  <input type="text" class="form-control loginctrl" name="username" placeholder="Identification..." required="required">
+              </div>
+              <div class="form-group">
+                  <label>Mot de passe</label>
+                  <input type="password" class="form-control loginctrl" name="password" placeholder="Votre Mot de Passe..." required="required">
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg btn-login">Se connecter</button>
+              </div>
+							<div class="clearfix"></div>
+              <div class="separator">
+	              <br />
+	              <div>
+	                  <p>©2016 Tout droits reservés. <br>
+										3ème année en informatique UAZ<br>
+									  UNIVERSITE ADVENTISTE ZURCHER</p>
+	              </div>
+              </div>
+
+          </form>
+
+          <hr>
+        </main>
+      </div>
+    </div>
+		<script type="text/javascript" src="jquery-3.2.1.slim.min.js"></script>
+		<script type="text/javascript" src="popper.min.js"></script>
+		<script type="text/javascript" src="bootstrap.min.js"></script>
+</body>
+</html>

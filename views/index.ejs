@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Testing socket.io</title>
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" type="text/css" media="screen" />
+  	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="fontawesome-all.min.css">
+    <link rel="icon" type="image/png" href="favicon.png" />
+  </head>
+
+  <body>
+    <div class="container-fluid main">
+      <nav class="navbar navbar-light bg-light justify-content-between sticky-top nav_head">
+        <div class="container-fluid">
+          <p>Bienvenue <strong><%= name.noms %></strong></p>
+        </div>
+        <!-- <a class="navbar-brand"> Bienvenue <strong><%= name.noms %></strong></a>
+         <form class="form-inline">
+           <a href="/logout/<%= name.id_utilisateur %>" id='id_user' class="btn btn-primary my-2 my-sm-0" role="button" aria-disabled="true">Déconnexion</a>
+         </form> -->
+      </nav>
+
+      <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        <main role="main">
+          <br>
+          <!-- <h2 class="question btn-info">QUESTION</h2> -->
+            <div id="container" class="list-group">
+            </div>
+            <div class="">
+              <a href="/logout/<%= name.id_utilisateur %>" class="float">
+                <i class="zmdi zmdi-sign-in my-float"></i>
+              </a>
+              <div class="label-container">
+                <div class="label-text">Déconnecter</div>
+                <i class="zmdi zmdi-play label-arrow"></i>
+              </div>
+            </div>
+            <p id="reponse" class="fixed-bottom">Votre réponse</p>
+            <br>
+        </main>
+      </div>
+    </div>
+      <!-- all scripts start here - script -->
+      <script src="socket.io.js"></script>
+      <script>
+        // create a new websocket
+          var socket = io.connect('http://192.168.1.169:3000');
+          var id_utilisateur = "",
+              id_quiz = "",
+              point_par_question = "",
+              rep = "";
+
+        // on message received we print all the data inside the #container div
+        socket.on('notification', function (data) {
+          var usersList = "<dl>";
+
+          $.each(data.question,function(index,user){
+              id_quiz = user.id_quiz;
+              point_par_question = user.point_par_question;
+              rep = user.reponse;
+              usersList += '<h2 id="question"> ' + user.question + '<small> (pour ' + user.point_par_question + ' points)</small></h2><br>' +
+               '<button type="button" class="list-group-item list-group-item-action active disabled" id="group_header"> REPONSE </button> <button onclick="clickButton(this)" id="A" class="list-group-item list-group-item-action"><strong>A.</strong> ' + user.A + '</button> <button onclick="clickButton(this)" id="B" class="list-group-item list-group-item-action" ><strong>B.</strong> ' + user.B + '</button> <button onclick="clickButton(this)" id="C" class="list-group-item list-group-item-action"><strong>C.</strong> ' + user.C + '</button> <button onclick="clickButton(this)" id="D" class="list-group-item list-group-item-action "><strong>D.</strong> ' + user.D + '</button>'
+          });
+          usersList += "</dl>";
+          $('#container').html(usersList);
+          $('time').html('Last Update:' + data.time);
+        });
+        socket.on('erreur', function(data){
+          $('#reponse').html(data.some);
+        });
+        socket.on('success', function(data){
+          $('#reponse').html('Votre réponse est: ' + data.reponse);
+        });
+
+        function clickButton(elem) {
+            socket.emit('clicked', {
+              reponse: elem.id,
+              id_utilisateur: '<%= name.id_utilisateur %>',
+              id_quiz : id_quiz,
+              point_par_question: point_par_question,
+              reponse_marina: rep
+            });
+
+
+        }
+      </script>
+      <script type="text/javascript" src="jquery-3.2.1.slim.min.js"></script>
+      <script type="text/javascript" src="popper.min.js"></script>
+      <script type="text/javascript" src="bootstrap.min.js"></script>
+  </body>
+
+</html>
