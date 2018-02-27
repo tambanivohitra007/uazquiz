@@ -1,7 +1,7 @@
 # uazquiz
 A quiz program exploring socket.io and express.j 
 
-how to use?
+# how to use?
 
 1. Download and extract the zip file
 2. install using npm:
