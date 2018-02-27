@@ -3,10 +3,13 @@ A quiz program exploring socket.io and express.j
 
 # how to use?
 
-1. Download and extract the zip file
-2. install using npm:
+#### 1. Download and extract the zip file 
+#### 2. install using npm:
   npm install
-3. Start the app using this command:
+#### 3. change the config file based on your need
+#### 4. run the script to create the database and the tables in mysql:
+  node scripts\create_db.js
+#### 5. Start the app using this command:
   node index.js 
  
  
